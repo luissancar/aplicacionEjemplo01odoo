@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <openerp>
         <data>
+
+
             <!-- Action to open To-do Task list -->
             <act_window
                 id="action_aplicacion_ejemplo01_task"
@@ -12,7 +14,7 @@
             <menuitem
                 id="menu_aplicacion_ejemplo01_task"
                 name="Aplicacion ejemplo 01 Tasks"
-                parent="mail.mail_feeds"
+
                 sequence="20"
                 action="action_aplicacion_ejemplo01_task"
             />
