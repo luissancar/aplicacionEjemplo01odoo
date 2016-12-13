@@ -19,7 +19,7 @@ Los modelos describen los objetos de negocio, como una oportunidad, una orden de
 
 Los modelos son implementados usando clases Python derivadas de una plantilla de clase de Odoo. Estos son traducidos directamente a objetos de base de datos, y Odoo se encarga de esto automáticamente cuando el módulo es instalado o actualizado.
 Creamos el fichero app01_model.py:
-
+~~~
 #-*- coding: utf-8 -*-
 from openerp import models, fields
 
@@ -28,7 +28,7 @@ class App01Task(models.Model):
     name = fields.Char('Description', required=True)
     is_done = fields.Boolean('Done?')
     active = fields.Boolean('Active?', default=True)
-
+~~~
 La primera línea es un marcador especial que le dice al interprete de Python que ese archivo es UTF-8, por lo que puede manejar y esperarse caracteres non-ASCII. No usaremos ninguno, pero es mas seguro usarlo.
 
 La segunda línea hace que estén disponibles los modelos y los objetos campos del núcleo de Odoo.
@@ -51,7 +51,7 @@ al cual almacenar nuestros datos, hagamos que este disponible en la interfaz con
 Todo lo que necesitamos hacer es agregar una opción de menú para abrir el modelo de "Aplicacion Task" para que pueda ser usado. Esto es realizado usando un archivo XML. Igual que en el caso de los modelos, algunas personas consideran como una buena practica mantener las definiciones de vistas en en un subdirectorio separado.
 
 Crearemos un archivo nuevo aplicacion_view.xml en el directorio raíz del módulo, y este tendrá la declaración de un ítem de menú y la acción ejecutada por este:
-
+~~~
 <?xml version="1.0" encoding="UTF-8"?>
     <openerp>
         <data>
@@ -72,7 +72,7 @@ Crearemos un archivo nuevo aplicacion_view.xml en el directorio raíz del módul
             />
         </data>
     </openerp>
-
+~~~
 La interfaz con el usuario y usuaria, incluidas las opciones del menú y las acciones, son almacenadas en tablas de la base de datos. El archivo XML es un archivo de datos usado para cargar esas definiciones dentro de la base de datos cuando el módulo es instalado o actualizado. Esto es un archivo de datos de Odoo, que describe dos registros para ser agregados a Odoo: - El elemento <act_window> define una Acción de Ventana del lado del cliente para abrir el modelo aplicacion.task definido en el archivo Python, con las vistas de árbol y formulario habilitadas, en ese orden. - El elemento <menuitem> define un ítem de menú bajo el menú Mensajería (identificado por mail.mail_feeds), llamando a la acción action_aplicacion_task, que fue definida anteriormente. el atributo sequence nos deja fijar el orden de las opciones del menú.
 
 Ahora necesitamos decirle al módulo que use el nuevo archivo de datos XML. Esto es hecho en el archivo __openerp__.py usando el atributo data. Este define la lista de archivos que son cargados por el módulo. Agregue este atributo al diccionario del descriptor:
@@ -87,7 +87,7 @@ Todas las vistas son almacenadas en la base de datos, en el modelo ir.model.view
 
 
 Añadir al fichero aplicacion_view.xml:
-
+~~~
 
 <record    id="view_form_aplicacion_task" model="ir.ui.view">
     <field name="name">Aplicacion Task Form</field>
@@ -100,7 +100,7 @@ Añadir al fichero aplicacion_view.xml:
         </form>
     </field>
 </record>
-
+~~~
 Esto agregará un registro al modelo ir.ui.view con el identificador view_form_aplicacion_task. Para el modelo la vista es todo.task y nombrada Aplicacion Task Form. El nombre es solo para información, no tiene que ser único, pero debe permitir identificar fácilmente a que registro se refiere.
 
 El atributo más importante es arch, que contiene la definición de la vista. Aquí decimos que es un formulario, y que contiene tres campos, y que decidimos hacer al campo active de solo lectura.
@@ -116,7 +116,7 @@ Los atributos básicos para un botón son: string con el texto que se muestra en
 La etiqueta <group> permite organizar el contenido del formulario. Colocando los elementos <group> dentro de un elemento <group> crea una disposición de dos columnas dentro del grupo externo. Se recomienda que los elementos Group tengan un nombre para hacer más fácil su extensión en otros módulos.
 
 Usaremos esto para mejorar la organización de nuestro contenido.
-
+~~~
 <record id="view_form_aplicacion_ejemplo01_task" model="ir.ui.view">
                 <field name="name">Aplicaión ejemplo01  Form</field>
                 <field name="model">aplicacionejemplo01.task</field>
@@ -140,39 +140,46 @@ Usaremos esto para mejorar la organización de nuestro contenido.
                 </form>
                 </field>
             </record>
-
+~~~
 Ahora agregaremos lógica a nuestros botones. Edite el archivo Python aplicacion_model.py para agregar a la clase los métodos llamados por los botones.
 
 
 La acción del botón Toggle  solo cambia de estado (marca o desmarca) la señal Is Done?. La forma más simple para agregar la lógica a un registro, es usar el decorador @api.one. Aquí self representara un registro. Si la acción es llamada para un conjunto de registros, la API gestionara esto lanzando el método para cada uno de los registros
-
+~~~
 @api.one
     def do_toggle_done(self):
         self.is_done = not self.is_done
         return True
-
+~~~
 
 Simplemente modifica el campo is_done, invirtiendo su valor. Luego los métodos pueden ser llamados desde el lado del client y siempre deben devolver algo. Si no devuelven nada, las llamadas del cliente usando el protocolo XMLRPC no funcionará. Si no tenemos nada que devolver, la práctica común es simplemente devolver True.
 
 
 Para el botón Clear All Done queremos ir un poco más lejos. Este debe buscar todos los registros activos que estén finalizados, y desactivarlos. Se supone que los botones de formulario solo actúan sobre los registros seleccionados, pero para mantener las cosas simples haremos un poco de trampa, y también actuará sobre los demás botones:
-
+~~~
 @api.multi def do_clear_done(self):
     done_recs = self.search([('is_done', '=', True)])
     done_recs.write({'active': False})
     return True
-
+~~~
 
 En los métodos decorados con @api.multi el self representa un conjunto de registros. Puede contener un único registro, cuando se usa desde un formulario, o muchos registros, cuando se usa desde la vista de lista. Ignoraremos el conjunto de registros de self y construiremos nuestro propio conjunto done_recs que contiene todas la tareas marcadas como finalizadas. Luego fijamos la señal activa como False, en todas ellas.
-
+~~~
 
 @api.multi
     def do_clear_done(self):
         done_recs = self.search([('is_done', '=', True)])
         done_recs.write({'active': False})
         return True
+~~~
 
 El search es un método de la API que devuelve los registros que cumplen con algunas condiciones. Estas condiciones son escritas en un dominio, esto es una lista de tríos. 
 
 El método write fija los valores de todos los elementos en el conjunto de una vez. Los valores a escribir son definidos usando un diccionario. Usar write aquí es más eficiente que iterar a través de un conjunto de registros para asignar el valor uno por uno.
+
+
+# Configurando la seguridad en el control de acceso
+En este momento, nuestro modelo nuevo no tiene reglas de acceso, por lo tanto puede ser usado por cualquiera, no solo por el administrador.
+Para tener una muestra de la información requerida para agregar reglas de acceso a un modelo, use el cliente web y diríjase a:
+Configuración | Técnico | Seguridad | Lista controles de acceso.
 
