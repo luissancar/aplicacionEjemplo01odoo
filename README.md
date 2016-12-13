@@ -182,4 +182,38 @@ El método write fija los valores de todos los elementos en el conjunto de una v
 En este momento, nuestro modelo nuevo no tiene reglas de acceso, por lo tanto puede ser usado por cualquiera, no solo por el administrador.
 Para tener una muestra de la información requerida para agregar reglas de acceso a un modelo, use el cliente web y diríjase a:
 Configuración | Técnico | Seguridad | Lista controles de acceso.
+Esta información debe ser provista por el modelo, usando un archivo de datos para cargar las líneas dentro del modelo ir.model.access. Daremos acceso completo al modelo al grupo empleado. Empleado es el grupo básico de acceso, casi todos pertenecen a este grupo.
+Esto es realizado usualmente usando un archivo CSV llamado security/ir.model.access.csv.
+Crearemos el archivo nuevo con el siguiente contenido:
+
+~~~
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aplicacionejemplo01_task_group_user,aplicacionejemplo01.task.user,model_aplicacionejemplo01_task,base.group_user,1,1,1,1
+~~~
+
+ Agregaremos la referencia a este archivo nuevo en el atributo "data" del descriptor en __openerp__.py, de la siguiente manera:
+ ~~~
+
+    'data' : ['aplicacionEjemplo01View.xml', 'security/ir.model.access.csv',],
+ ~~~
+
+
+Odoo es un sistema multi-usuario, y queremos que la aplicación to-do task sea privada para cada usuario.
+Debemos crear un archivo security/todo_access_rules.xml con el siguiente contenido:
+~~~~
+<?xml version="1.0" encoding="utf-8"?>
+    <openerp>
+        <data noupdate="1">
+            <record id="aplicacioejemplo01_task_user_rule" model="ir.rule">
+                <field name="name">Aplicacion ejemplo 01 Tasks only for owner</field>
+                <field name="model_id" ref="model_aplicacionejemplo01_task"/>
+                <field name="domain_force">
+                    [('create_uid','=',user.id)]
+                </field>
+                <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+            </record>
+        </data>
+    </openerp>
+~~~~
+
 
