@@ -4,6 +4,7 @@ C:\Program Files (x86)\Odoo 9.0-20161104\server\openerp\addons
 crear  carpeta(nombre aplicacion)
 crear fichero __init__.py
 Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo __openerp__.py:
+~~~
 {
     'name': 'Aplicacion Application',
     'description': 'Manage your personal Tasks with this module.',
@@ -11,7 +12,7 @@ Luego necesitamos crear el archivo descriptor. Debe contener únicamente un dicc
     'depends': ['mail'],
     'application': True,
 }
-
+~~~
 El atributo depends puede tener una lista de otros módulos requeridos. Odoo los instalará automáticamente cuando este módulo sea instalado.
 
 Los modelos describen los objetos de negocio, como una oportunidad, una orden de venta, o un socio (cliente, proveedor, etc). Un modelo tiene una lista de atributos y también puede definir su negocio específico.
