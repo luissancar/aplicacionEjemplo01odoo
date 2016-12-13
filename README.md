@@ -231,5 +231,5 @@ Como se hizo anteriormente, debemos agregar el archivo a __openerp__.py.
 
 
 
-###### http://fundamentos-de-desarrollo-en-odoo.readthedocs.io/es/latest/capitulos/construyendo-tu-primera-aplicacion-odoo.html
+[^ref1]: http://fundamentos-de-desarrollo-en-odoo.readthedocs.io/es/latest/capitulos/construyendo-tu-primera-aplicacion-odoo.html
 
