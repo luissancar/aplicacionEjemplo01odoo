@@ -32,7 +32,7 @@ La primera línea es un marcador especial que le dice al interprete de Python qu
 
 La segunda línea hace que estén disponibles los modelos y los objetos campos del núcleo de Odoo.
 
-la tercera línea declara nuestro nuevo modelo.
+la tercera línea declara nuestro nuevo modelo.    
 
 Todavía, este archivo, no es usado por el módulo. Debemos decirle a Odoo que lo cargue con el módulo en el archivo __init__.py. Editemos el archivo para agregar la siguiente línea:
 
@@ -171,6 +171,7 @@ En los métodos decorados con @api.multi el self representa un conjunto de regis
         done_recs.write({'active': False})
         return True
 
-El search es un método de la API que devuelve los registros que cumplen con algunas condiciones. Estas condiciones son escritas en un dominio, esto es una lista de tríos.
+El search es un método de la API que devuelve los registros que cumplen con algunas condiciones. Estas condiciones son escritas en un dominio, esto es una lista de tríos. 
 
 El método write fija los valores de todos los elementos en el conjunto de una vez. Los valores a escribir son definidos usando un diccionario. Usar write aquí es más eficiente que iterar a través de un conjunto de registros para asignar el valor uno por uno.
+
