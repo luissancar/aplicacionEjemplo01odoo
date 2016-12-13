@@ -216,4 +216,20 @@ Debemos crear un archivo security/todo_access_rules.xml con el siguiente conteni
     </openerp>
 ~~~~
 
+Como se hizo anteriormente, debemos agregar el archivo a __openerp__.py.
+
+# Agregar un ícono al módulo
+
+ Para esto solo debemos agregar al módulo el archivo static/description/icon.png con el ícono que usaremos.
+
+
+
+
+
+
+
+
+
+
+###### http://fundamentos-de-desarrollo-en-odoo.readthedocs.io/es/latest/capitulos/construyendo-tu-primera-aplicacion-odoo.html
 
