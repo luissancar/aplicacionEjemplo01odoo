@@ -1,4 +1,4 @@
-# Creación aplicaciones en odoo
+# Creación de aplicaciones en odoo
 carpeta(en Windows):
 C:\Program Files (x86)\Odoo 9.0-20161104\server\openerp\addons
 crear  carpeta(nombre aplicacion)
