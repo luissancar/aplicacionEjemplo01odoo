@@ -7,8 +7,8 @@ Luego necesitamos crear el archivo descriptor. Debe contener únicamente un dicc
 ~~~
 {
     'name': 'Aplicacion Application',
-    'description': 'Manage your personal Tasks with this module.',
-    'author': 'Daniel Reis',
+    'description': 'Aplicación ejemplo.',
+    'author': 'Autor',
     'depends': ['mail'],
     'application': True,
 }
