@@ -2,7 +2,8 @@
 carpeta(en Windows):
 C:\Program Files (x86)\Odoo 10\server\odoo\addons  
 Crear  carpeta(nombre aplicacion)  
-Crear fichero ~~~
+Crear fichero 
+~~~
 __init__.py
 ~~~
 Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo __openerp__.py:
