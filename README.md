@@ -6,7 +6,10 @@ Crear fichero
 ~~~
 __init__.py
 ~~~
-Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo __openerp__.py:
+Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo 
+~~~
+__openerp__.py:
+~~~
 ~~~
 {
     'name': 'Aplicacion Application',
