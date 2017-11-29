@@ -8,7 +8,7 @@ __init__.py
 ~~~
 Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo 
 ~~~
-__openerp__.py:
+__manifest__.py:
 ~~~
 ~~~
 {
@@ -59,7 +59,7 @@ Todo lo que necesitamos hacer es agregar una opción de menú para abrir el mode
 Crearemos un archivo nuevo aplicacion_view.xml en el directorio raíz del módulo, y este tendrá la declaración de un ítem de menú y la acción ejecutada por este:
 ~~~
 <?xml version="1.0" encoding="UTF-8"?>
-    <openerp>
+    <odoo>
         <data>
             <!-- Action to open To-do Task list -->
             <act_window
@@ -77,7 +77,7 @@ Crearemos un archivo nuevo aplicacion_view.xml en el directorio raíz del módul
                 action="action_aplicacion_task"
             />
         </data>
-    </openerp>
+    </odoo>
 ~~~
 La interfaz con el usuario y usuaria, incluidas las opciones del menú y las acciones, son almacenadas en tablas de la base de datos. El archivo XML es un archivo de datos usado para cargar esas definiciones dentro de la base de datos cuando el módulo es instalado o actualizado. Esto es un archivo de datos de Odoo, que describe dos registros para ser agregados a Odoo: - El elemento <act_window> define una Acción de Ventana del lado del cliente para abrir el modelo aplicacion.task definido en el archivo Python, con las vistas de árbol y formulario habilitadas, en ese orden. - El elemento <menuitem> define un ítem de menú bajo el menú Mensajería (identificado por mail.mail_feeds), llamando a la acción action_aplicacion_task, que fue definida anteriormente. el atributo sequence nos deja fijar el orden de las opciones del menú.
 
