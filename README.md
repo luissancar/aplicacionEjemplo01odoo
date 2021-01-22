@@ -115,7 +115,7 @@ Lo anterior proporciona una vista de formulario básica, pero podemos hacer algu
 
 los formularios pueden tener botones que ejecuten acciones. Estos son capaces de desencadenar acciones de flujo de trabajo, ejecutar Acciones de Ventana, como abrir otro formulario, o ejecutar funciones Python definidas en el modelo.
 
-Estos pueden ser colocados en cualquier parte dentro de un formulario, pero para formularios con estilo de documentos, el sitio recomendado es en la sección <header>.
+Estos pueden ser colocados en cualquier parte dentro de un formulario, pero para formularios con estilo de documentos, el sitio recomendado es en la sección <header>
 
 Los atributos básicos para un botón son: string con el texto que se muestra en el botón, type que hace referencia al tipo de acción que ejecuta, y name que es el identificador para esa acción. El atributo class puede aplicar estilos CSS, como un HTML común.
 
@@ -147,10 +147,12 @@ Usaremos esto para mejorar la organización de nuestro contenido.
                 </field>
             </record>
 ~~~
+
 Ahora agregaremos lógica a nuestros botones. Edite el archivo Python aplicacion_model.py para agregar a la clase los métodos llamados por los botones.
 
 
 La acción del botón Toggle  solo cambia de estado (marca o desmarca) la señal Is Done?. La forma más simple para agregar la lógica a un registro, es usar el decorador @api.one. Aquí self representara un registro. Si la acción es llamada para un conjunto de registros, la API gestionara esto lanzando el método para cada uno de los registros
+
 ~~~
 @api.one
     def do_toggle_done(self):
